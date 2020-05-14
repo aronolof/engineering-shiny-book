@@ -3,9 +3,9 @@
 # Setting up for success with `{golem}`
 
 Before starting to prototype and build anything, initialize a `{golem}` [@R-golem] project! 
-This will help you put your application on solid ground, and once the project is ready to be filled, you can start prototyping right inside it!
+This will help you start your application on solid ground, and once the project is ready to be filled, you can start prototyping right inside it.
 
-The general workflow for "prototype and build" is the following: the project manager sets up a `{golem}` project, where the first steps are filled, the general structure, with Shiny module, is set, and then the project is registered to the version control system. 
+The general workflow for "prototype and build" is the following: the project manager sets up a `{golem}` project, where the first steps are filled, the general structure (potentially with Shiny module) is set, and then the project is registered to the version control system. 
 Once we have this structure, package and modules combined, we can start prototyping the UI inside the module, work on the CSS and JavaScript elements that might be needed, and prototyping the back-end functionalities inside Rmarkdown files. 
 And then, once this two prototyping sides are finished, we work on the integration of everything inside the reactive context.
 
@@ -60,7 +60,7 @@ fs::dir_tree("golex")
 If you are already familiar with R packages, most of these files will appear very familiar to you. 
 That's because a `{golem}` app IS a package.
 
-For more details about these files, please refer to the [Understanding {golem} app structure]() part of this book. 
+For more details about these files, please refer to the [Understanding `{golem}` app structure]() part of this book. 
 In this part, we will go through the `dev/01_start.R` and `dev/02_dev.R` scripts.
 
 ## Setting things up with `dev/01_start.R`
@@ -75,13 +75,20 @@ First, fill the DESCRIPTION file by adding information about the package that wi
 
 ```{r 09-step-by-step-prototype-4, eval = FALSE}
 golem::fill_desc(
-  pkg_name = "ipsumapp", # The Name of the package containing the App 
-  pkg_title = "PKG_TITLE", # The Title of the package containing the App 
-  pkg_description = "PKG_DESC.", # The Description of the package containing the App 
-  author_first_name = "AUTHOR_FIRST", # Your First Name
-  author_last_name = "AUTHOR_LAST", # Your Last Name
-  author_email = "AUTHOR@MAIL.COM", # Your Email
-  repo_url = NULL # The URL of the GitHub Repo (optional) 
+  # The Name of the package containing the App 
+  pkg_name = "ipsumapp", 
+  # The Title of the package containing the App 
+  pkg_title = "PKG_TITLE", 
+  # The Description of the package containing the App 
+  pkg_description = "PKG_DESC.", 
+  # Your First Name
+  author_first_name = "AUTHOR_FIRST", 
+  # Your Last Name
+  author_last_name = "AUTHOR_LAST", 
+  # Your Email
+  author_email = "AUTHOR@MAIL.COM", 
+  # The URL of the GitHub Repo (optional) 
+  repo_url = NULL 
 )   
 ```
 
@@ -92,26 +99,18 @@ Then, call the `golem::set_golem_options()` function, it will add information to
 If you want to use the MIT license, add README, a code of conduct, a lifecycle badge, and NEWS
 
 ```{r 09-step-by-step-prototype-5, eval = FALSE}
-usethis::use_mit_license( name = "Golem User" )  # You can set another license here
+# You can set another license here
+usethis::use_mit_license( name = "Golem User" )  
 usethis::use_readme_rmd( open = FALSE )
 usethis::use_code_of_conduct()
 usethis::use_lifecycle_badge( "Experimental" )
 usethis::use_news_md( open = FALSE )
 ```
 
-It's also where you will be invited to use `git`
+It's also where you will be invited to use `git`:
 
 ```{r 09-step-by-step-prototype-6, eval = FALSE}
 usethis::use_git()
-```
-
-
-### Init Tests
-
-Create a template for tests:
-
-```{r 09-step-by-step-prototype-7, eval = FALSE}
-golem::use_recommended_tests()
 ```
 
 

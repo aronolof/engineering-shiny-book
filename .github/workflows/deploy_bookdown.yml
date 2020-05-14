@@ -16,7 +16,16 @@ jobs:
       - uses: actions/checkout@v1
       
       - uses: r-lib/actions/setup-r@v1
-      
+        with:
+          crayon.enabled: 'FALSE'
+          
+      - uses: actions/cache@v1
+        with:
+          path: ~/.local/share/renv
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+          
       - uses: r-lib/actions/setup-pandoc@v1
       
       - name: Install tinytex
@@ -35,19 +44,19 @@ jobs:
           sudo add-apt-repository ppa:canonical-chromium-builds/stage
           sudo apt-get update
           sudo apt-get install chromium-browser 
-        
-      - name: Install sysfonts
-        run: Rscript -e 'install.packages("sysfonts", Ncpus = 4)'
-        
-      - name: Install rmarkdown
-        run: Rscript -e 'install.packages(c("rmarkdown","bookdown"), Ncpus = 4)'
+
+      - name: Install rmarkdown, bookdown and sysfonts
+        run: Rscript -e 'install.packages(c("sysfonts", "rmarkdown","bookdown"), Ncpus = 4)'
       
-      - name: Befor build
+      - name: Spell check
+        run: Rscript before-build-spellcheck.R
+        env:
+          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
+          GH_TOKEN: ${{ secrets.TOKEN }} # https://github.com/settings/tokens
+      
+      - name: Before build
         run: Rscript before-build.R
-      
-      - name: Install local deps
-        run: Rscript -e 'install.packages("remotes", Ncpus = 4);remotes::install_local(upgrade = "never", Ncpus = 4)'
-      
+          
       - name: Render Book
         run: Rscript -e 'bookdown::render_book("index.Rmd")'
       
